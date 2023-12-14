@@ -1,3 +1,19 @@
 #!/bin/bash
-result=$((5#$(echo $WATER | tr water 01234) + 5#$(echo $STIR | tr stirr. 01234)))
-printf '%o\n' "$result" | tr '01234567' 'bestchol'
+convert_base() {
+  local input="$1"
+  local base_characters="$2"
+  local base=0
+
+  for (( i=0; i<${#input}; i++ )); do
+    char="${input:i:1}"
+    digit=$(expr index "$base_characters" "$char" - 1)
+    base=$((base * ${#base_characters} + digit))
+  done
+
+  echo "$base"
+}
+
+water_base10=$(convert_base "$WATER" "water")
+stir_base10=$(convert_base "$STIR" "stirr.")
+result_base8=$(printf '%o' $((water_base10 + stir_base10)))
+echo "Result in base bestchol: $result_base8"
