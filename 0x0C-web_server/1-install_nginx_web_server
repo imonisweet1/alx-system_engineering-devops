@@ -4,4 +4,5 @@ apt-get -y update
 apt-get -y upgrade
 apt-get -y install nginx
 service nginx start
+#!/usr/bin/python3
 echo "Hello World!" > /var/www/html/index.nginx-debian.html
