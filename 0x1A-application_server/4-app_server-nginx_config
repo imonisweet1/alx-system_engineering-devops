@@ -1,0 +1,27 @@
+server {
+        listen 80;
+        listen [::]:80;
+
+        root /var/ww/html;
+
+        # Add index.php to the list if PHP is been used
+        index inde.html index.htm home.html index.nginx-debian.html;
+
+        server_name 3.85.148.204;
+        add_header X-Served-By $hostname;
+
+        location / {
+                try_files $uri $uri/ =404;
+        }
+        location /airbnb-onepage/ {
+                proxy_pass http://127.0.0.1:5000/airbnb-onepage/;
+        }
+
+        location ~ /number_odd_or_even/(\d+)$ {
+                set $number $1;
+                proxy_pass http://127.0.0.1:5001/number_odd_or_even/$number;
+        }
+        location /api/ {
+                proxy_pass http://127.0.0.1:5002/api/;
+        }
+}
